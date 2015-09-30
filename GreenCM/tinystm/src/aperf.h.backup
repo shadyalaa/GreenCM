@@ -1,0 +1,132 @@
+/*
+ *  Copyright (C) 2009  Thomas Renninger <trenn@suse.de>, Novell Inc.
+ *
+ *  Inspired by these projects:
+ *    cpuid (by Todd Allen)
+ *    msr-tools (by H. Peter Anvin <hpa@zytor.com>)
+ *
+ *  Licensed under the terms of the GNU GPL License version 2.
+ *
+ *
+ *  What does this program do:
+ *
+ *  On latest processors exist two MSR registers refered to as:
+ *    - MPERF increasing with maxium (P0) frequency in C0
+ *    - APERF increasing with current/actual frequency in C0
+ *
+ *  From this information the average frequency over a time period can be
+ *  calculated and this is what this tool does.
+ *
+ *  A nice falloff feature beside the average frequency is the time
+ *  a processor core remained in C0 (working state) or any CX (sleep state)
+ *  processor sleep state during the measured time period. This information
+ *  can be determined from the fact that MPERF only increases in C0 state.
+ *
+ *  Note: There were kernels which reset MPERF/APERF registers to 0.
+ *        This got reverted by git commit
+ *                  18b2646fe3babeb40b34a0c1751e0bf5adfdc64c
+ *        which was commited to 2.6.30-rcX mainline kernels
+ *        For kernels where the kernel rests MPERF/APERF registers to 0,
+ *        this tool will not work. It cannot be detected whether this happened.
+ *
+ * Possible ToDos/Enhancments:
+ *
+ *  - Refresh the screen when mulitple cpus are poked and display results
+ *    on one screen
+ *    -This would introduce a lot more complexity, not sure whether it's
+ *       wanted/needed. I'd vote to better not do that.
+ *  - Manpage
+ *  - Translations
+ *  - ...
+ */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <getopt.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <stdint.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <string.h>
+
+#include "cpufreq.h"
+#include "cpuid.h"
+
+#define MSR_IA32_APERF 0x000000E8
+#define MSR_IA32_MPERF 0x000000E7
+
+struct avg_perf_cpu_info
+{
+	unsigned long max_freq;
+	uint64_t saved_aperf;
+	uint64_t saved_mperf;
+	uint32_t is_valid:1;
+};
+
+static int cpu_has_effective_freq();
+
+/*
+ * read_msr
+ *
+ * Will return 0 on success and -1 on failure.
+ * Possible errno values could be:
+ * EFAULT -If the read/write did not fully complete
+ * EIO    -If the CPU does not support MSRs
+ * ENXIO  -If the CPU does not exist
+ */
+
+static int read_msr(int cpu, unsigned int idx, unsigned long long *val);
+
+/*
+ * get_aperf_mperf()
+ *
+ * Returns the current aperf/mperf MSR values of cpu
+ */
+static int get_aperf_mperf(unsigned int cpu, uint64_t *aperf, uint64_t *mperf);
+
+/*
+ * get_average_perf()
+ *
+ * Returns the average performance (also considers boosted frequencies)
+ * 
+ * Input:
+ *   aperf_diff: Difference of the aperf register over a time period
+ *   mperf_diff: Difference of the mperf register over the same time period
+ *   max_freq:   Maximum frequency (P0)
+ *
+ * Returns:
+ *   Average performance over the time period
+ */
+static unsigned long get_average_perf(unsigned long max_freq, uint64_t aperf_diff, uint64_t mperf_diff);
+
+/*
+ * get_C_state_time()
+ *
+ * Calculates the time the processor was in C0 and Cx processor sleep states
+ *
+ * As mperf does only tick in C0 at maximum frequency, this is a nice "falloff"
+ * functionality and more accurate than powertop or other kernel timer based
+ * C-state measurings (and can be used to verify whether they are correct.
+ *
+ * Input:
+ *   time_diff:  The time passed for which the mperf_diff was calulcated on
+ *   mperf_diff: The value the mperf register increased during time_diff
+ *   max_freq:   Maximum frequency of the processor (P0) in kHz
+ *
+ * Output:
+ *   C0_time:    The time the processor was in C0
+ *   CX_time:    The time the processor was in CX
+ *   percent:    Percentage the processor stayed in C0
+ */
+static int get_C_state_time(struct timeval time_diff, uint64_t mperf_diff, unsigned long max_freq, struct timeval *C0_time, struct timeval *CX_time, unsigned int *percent);
+
+static int get_measure_start_info(unsigned int cpu, struct avg_perf_cpu_info *cpu_info);
+
+static void print_cpu_stats(unsigned long average, struct timeval c0_time, struct timeval cx_time, unsigned int c0_percent);
+
+static int do_measuring_on_cpu(int sleep_time, int once, int cpu);
+
+static int do_measure_all_cpus(int sleep_time, int once);

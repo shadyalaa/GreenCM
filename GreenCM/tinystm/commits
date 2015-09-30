@@ -1,0 +1,46 @@
+src/mod_ab.c:    stats->samples = sc_samples(&ab->stats);
+src/mod_ab.c:    stats->mean = sc_mean(&ab->stats);
+src/mod_ab.c:    stats->variance = sc_variance(&ab->stats);
+src/mod_ab.c:    stats->min = sc_min(&ab->stats);
+src/mod_ab.c:    stats->max = sc_max(&ab->stats);
+src/mod_ab.c:    stats->percentile_50 = sc_percentile(&ab->stats, 50);
+src/mod_ab.c:    stats->percentile_90 = sc_percentile(&ab->stats, 90);
+src/mod_ab.c:    stats->percentile_95 = sc_percentile(&ab->stats, 95);
+src/mod_ab.c:    stats->reservoir = ab->stats.reservoir;
+src/mod_ab.c:    stats->reservoir_size = ab->stats.samples < reservoir_size ? ab->stats.samples : reservoir_size;
+src/mod_stats.c:    *(unsigned long *)val = stats->commits;
+src/mod_stats.c:    *(unsigned long *)val = stats->retries_acc;
+src/mod_stats.c:    *(double *)val = (double)stats->retries_acc / stats->retries_cnt;
+src/mod_stats.c:    *(unsigned long *)val = stats->retries_min;
+src/mod_stats.c:    *(unsigned long *)val = stats->retries_max;
+src/mod_stats.c:  stats->commits = 0;
+src/mod_stats.c:  stats->retries = 0;
+src/mod_stats.c:  stats->retries_acc = 0;
+src/mod_stats.c:  stats->retries_cnt = 0;
+src/mod_stats.c:  stats->retries_min = ULONG_MAX;
+src/mod_stats.c:  stats->retries_max = 0;
+src/mod_stats.c:stats->backoff_wait_0 = 0;
+src/mod_stats.c:stats->backoff_wait_1 = 0;
+src/mod_stats.c:stats->backoff_wait_2 = 0;
+src/mod_stats.c:stats->backoff_wait_4 = 0;
+src/mod_stats.c:stats->backoff_wait_5 = 0;
+src/mod_stats.c:stats->backoff_wait_6 = 0;
+src/mod_stats.c:stats->backoff_wait_7 = 0;
+src/mod_stats.c:stats->backoff_wait_8 = 0;
+src/mod_stats.c:stats->backoff_wait_9 = 0;
+src/mod_stats.c:  ATOMIC_FETCH_ADD_FULL(&mod_stats_global.commits, stats->commits);
+src/mod_stats.c:  ATOMIC_FETCH_ADD_FULL(&mod_stats_global.retries_cnt, stats->retries_cnt);
+src/mod_stats.c:  ATOMIC_FETCH_ADD_FULL(&mod_stats_global.retries_acc, stats->retries_acc);
+src/mod_stats.c:  if (stats->retries_max > max) {
+src/mod_stats.c:    if (ATOMIC_CAS_FULL(&mod_stats_global.retries_max, max, stats->retries_max) == 0)
+src/mod_stats.c:  if (stats->retries_min < min) {
+src/mod_stats.c:    if (ATOMIC_CAS_FULL(&mod_stats_global.retries_min, min, stats->retries_min) == 0)
+src/mod_stats.c:  stats->commits++;
+src/mod_stats.c:  stats->retries_acc += stats->retries;
+src/mod_stats.c:  stats->retries_cnt++;
+src/mod_stats.c:  if (stats->retries_min > stats->retries)
+src/mod_stats.c:    stats->retries_min = stats->retries;
+src/mod_stats.c:  if (stats->retries_max < stats->retries)
+src/mod_stats.c:    stats->retries_max = stats->retries;
+src/mod_stats.c:  stats->retries = 0;
+src/mod_stats.c:  stats->retries++;

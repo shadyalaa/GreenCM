@@ -1,0 +1,220 @@
+In file included from ../../src/stm_internal.h:854:0,
+                 from ../../src/aperf.h:14,
+                 from ../../src/stm.c:36,
+                 from ../abi.c:61:
+../../src/stm_wbetl.h: In function ‘stm_wbetl_rollback’:
+../../src/stm_wbetl.h:129:18: warning: unused variable ‘j’ [-Wunused-variable]
+     volatile int j;
+                  ^
+../../src/stm_wbetl.h:128:19: warning: unused variable ‘wait’ [-Wunused-variable]
+     unsigned long wait;
+                   ^
+In file included from ../../src/aperf.h:14:0,
+                 from ../../src/stm.c:36,
+                 from ../abi.c:61:
+../../src/stm_internal.h: In function ‘stm_rollback’:
+../../src/stm_internal.h:1022:16: warning: unused variable ‘j’ [-Wunused-variable]
+   volatile int j;
+                ^
+In file included from ../../src/stm.c:36:0,
+                 from ../abi.c:61:
+../../src/aperf.h: In function ‘get_measure_start_info’:
+../../src/aperf.h:160:21: warning: unused variable ‘max’ [-Wunused-variable]
+  unsigned long min, max;
+                     ^
+../../src/aperf.h:160:16: warning: unused variable ‘min’ [-Wunused-variable]
+  unsigned long min, max;
+                ^
+In file included from ../abi.c:61:0:
+../../src/stm.c: At top level:
+../../src/stm.c:251:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_4(void* x){
+ ^
+../../src/stm.c:323:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_5(void* x){
+ ^
+../../src/stm.c:354:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_3(void* x)
+ ^
+../../src/stm.c: In function ‘thread_proc_3’:
+../../src/stm.c:379:8: warning: unused variable ‘power_prev’ [-Wunused-variable]
+  float power_prev=0;
+        ^
+../../src/stm.c:371:16: warning: unused variable ‘tcommits_prev’ [-Wunused-variable]
+  unsigned long tcommits_prev=0;
+                ^
+../../src/stm.c:366:16: warning: unused variable ‘max_threshold’ [-Wunused-variable]
+  unsigned long max_threshold = 200;
+                ^
+../../src/stm.c:365:16: warning: unused variable ‘min_threshold’ [-Wunused-variable]
+  unsigned long min_threshold = 30;
+                ^
+../../src/stm.c:361:6: warning: unused variable ‘confidence’ [-Wunused-variable]
+  int confidence = 0;
+      ^
+../../src/stm.c: At top level:
+../../src/stm.c:511:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc(void* x)
+ ^
+../../src/stm.c: In function ‘thread_proc’:
+../../src/stm.c:530:8: warning: unused variable ‘power_prev’ [-Wunused-variable]
+  float power_prev=0;
+        ^
+../../src/stm.c:526:16: warning: variable ‘tcommits_prev’ set but not used [-Wunused-but-set-variable]
+  unsigned long tcommits_prev=0;
+                ^
+../../src/stm.c:521:16: warning: unused variable ‘max_threshold’ [-Wunused-variable]
+  unsigned long max_threshold = 500;
+                ^
+../../src/stm.c:520:16: warning: unused variable ‘min_threshold’ [-Wunused-variable]
+  unsigned long min_threshold = 30;
+                ^
+../../src/stm.c:517:6: warning: unused variable ‘confidence’ [-Wunused-variable]
+  int confidence = 0;
+      ^
+../../src/stm.c: At top level:
+../../src/stm.c:647:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_2(void* x)
+ ^
+../../src/stm.c: In function ‘stm_init’:
+../../src/stm.c:664:2: warning: implicit declaration of function ‘startEnergy’ [-Wimplicit-function-declaration]
+  startEnergy();
+  ^
+../../src/stm.c:666:9: warning: passing argument 3 of ‘pthread_create’ from incompatible pointer type [enabled by default]
+         pthread_create(&t2, NULL, thread_proc_2, NULL);
+         ^
+In file included from ../abi.c:31:0:
+/usr/include/pthread.h:225:12: note: expected ‘void * (*)(void *)’ but argument is of type ‘int (*)(void *)’
+ extern int pthread_create (pthread_t *__restrict __newthread,
+            ^
+In file included from ../abi.c:61:0:
+../../src/stm.c:663:6: warning: unused variable ‘j’ [-Wunused-variable]
+  int j;
+      ^
+../../src/stm.c: In function ‘int_stm_set_irrevocable’:
+../../src/stm.c:1411:1: warning: null argument where non-null required (argument 1) [-Wnonnull]
+ printf(DESIGN);
+ ^
+../../src/stm.c: In function ‘thread_proc_4’:
+../../src/stm.c:320:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+../../src/stm.c: In function ‘thread_proc_5’:
+../../src/stm.c:352:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+../abi.c: In function ‘_ITM_abortTransaction’:
+../abi.c:603:1: warning: ‘noreturn’ function does return [enabled by default]
+ }
+ ^
+cc: warning: abi.do: linker input file unused because linking not done
+cc: warning: arch.o: linker input file unused because linking not done
+In file included from ../../src/stm_internal.h:854:0,
+                 from ../../src/aperf.h:14,
+                 from ../../src/stm.c:36,
+                 from ../abi.c:61:
+../../src/stm_wbetl.h: In function ‘stm_wbetl_rollback’:
+../../src/stm_wbetl.h:129:18: warning: unused variable ‘j’ [-Wunused-variable]
+     volatile int j;
+                  ^
+../../src/stm_wbetl.h:128:19: warning: unused variable ‘wait’ [-Wunused-variable]
+     unsigned long wait;
+                   ^
+In file included from ../../src/aperf.h:14:0,
+                 from ../../src/stm.c:36,
+                 from ../abi.c:61:
+../../src/stm_internal.h: In function ‘stm_rollback’:
+../../src/stm_internal.h:1022:16: warning: unused variable ‘j’ [-Wunused-variable]
+   volatile int j;
+                ^
+In file included from ../../src/stm.c:36:0,
+                 from ../abi.c:61:
+../../src/aperf.h: In function ‘get_measure_start_info’:
+../../src/aperf.h:160:21: warning: unused variable ‘max’ [-Wunused-variable]
+  unsigned long min, max;
+                     ^
+../../src/aperf.h:160:16: warning: unused variable ‘min’ [-Wunused-variable]
+  unsigned long min, max;
+                ^
+In file included from ../abi.c:61:0:
+../../src/stm.c: At top level:
+../../src/stm.c:251:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_4(void* x){
+ ^
+../../src/stm.c:323:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_5(void* x){
+ ^
+../../src/stm.c:354:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_3(void* x)
+ ^
+../../src/stm.c: In function ‘thread_proc_3’:
+../../src/stm.c:379:8: warning: unused variable ‘power_prev’ [-Wunused-variable]
+  float power_prev=0;
+        ^
+../../src/stm.c:371:16: warning: unused variable ‘tcommits_prev’ [-Wunused-variable]
+  unsigned long tcommits_prev=0;
+                ^
+../../src/stm.c:366:16: warning: unused variable ‘max_threshold’ [-Wunused-variable]
+  unsigned long max_threshold = 200;
+                ^
+../../src/stm.c:365:16: warning: unused variable ‘min_threshold’ [-Wunused-variable]
+  unsigned long min_threshold = 30;
+                ^
+../../src/stm.c:361:6: warning: unused variable ‘confidence’ [-Wunused-variable]
+  int confidence = 0;
+      ^
+../../src/stm.c: At top level:
+../../src/stm.c:511:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc(void* x)
+ ^
+../../src/stm.c: In function ‘thread_proc’:
+../../src/stm.c:530:8: warning: unused variable ‘power_prev’ [-Wunused-variable]
+  float power_prev=0;
+        ^
+../../src/stm.c:526:16: warning: variable ‘tcommits_prev’ set but not used [-Wunused-but-set-variable]
+  unsigned long tcommits_prev=0;
+                ^
+../../src/stm.c:521:16: warning: unused variable ‘max_threshold’ [-Wunused-variable]
+  unsigned long max_threshold = 500;
+                ^
+../../src/stm.c:520:16: warning: unused variable ‘min_threshold’ [-Wunused-variable]
+  unsigned long min_threshold = 30;
+                ^
+../../src/stm.c:517:6: warning: unused variable ‘confidence’ [-Wunused-variable]
+  int confidence = 0;
+      ^
+../../src/stm.c: At top level:
+../../src/stm.c:647:1: warning: return type defaults to ‘int’ [-Wreturn-type]
+ thread_proc_2(void* x)
+ ^
+../../src/stm.c: In function ‘stm_init’:
+../../src/stm.c:664:2: warning: implicit declaration of function ‘startEnergy’ [-Wimplicit-function-declaration]
+  startEnergy();
+  ^
+../../src/stm.c:666:9: warning: passing argument 3 of ‘pthread_create’ from incompatible pointer type [enabled by default]
+         pthread_create(&t2, NULL, thread_proc_2, NULL);
+         ^
+In file included from ../abi.c:31:0:
+/usr/include/pthread.h:225:12: note: expected ‘void * (*)(void *)’ but argument is of type ‘int (*)(void *)’
+ extern int pthread_create (pthread_t *__restrict __newthread,
+            ^
+In file included from ../abi.c:61:0:
+../../src/stm.c:663:6: warning: unused variable ‘j’ [-Wunused-variable]
+  int j;
+      ^
+../../src/stm.c: In function ‘int_stm_set_irrevocable’:
+../../src/stm.c:1411:1: warning: null argument where non-null required (argument 1) [-Wnonnull]
+ printf(DESIGN);
+ ^
+../../src/stm.c: In function ‘thread_proc_4’:
+../../src/stm.c:320:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+../../src/stm.c: In function ‘thread_proc_5’:
+../../src/stm.c:352:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+../abi.c: In function ‘_ITM_abortTransaction’:
+../abi.c:603:1: warning: ‘noreturn’ function does return [enabled by default]
+ }
+ ^

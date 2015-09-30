@@ -1,0 +1,221 @@
+# Path to tinySTM
+ROOT ?= ..
+
+# ROOT must be defined to include Makefile.common
+include $(ROOT)/Makefile.common
+
+##############################################################################
+# Compilation options.  Note that the definitions from the main makefile
+# are not used here, so one can use different options here.
+##############################################################################
+
+#TODO test if function are inline or need a specific header to force inlining
+#TODO Flags may changed. I must find a way to keep up to date with current tiny. 
+
+ DEFINES += -DDESIGN=WRITE_BACK_ETL
+# DEFINES += -DDESIGN=WRITE_BACK_CTL
+#DEFINES += -DDESIGN=WRITE_THROUGH
+
+ifeq ($(MOD_CM_POLICY), karma)
+    MOD_POLICY = MOD=KARMA
+endif
+
+ifeq ($(MOD_CM_POLICY), aggressive)
+    MOD_POLICY = MOD=AGGRESSIVE
+endif
+
+ifeq ($(MOD_CM_POLICY), timestamp)
+    MOD_POLICY = MOD=TIMESTAMP
+endif
+
+ifeq ($(MOD_CM_POLICY), suicide)
+    MOD_POLICY = MOD=SUICIDE
+endif
+
+DEFINES += -D${MOD_POLICY}
+
+ifeq ($(BO_POLICY), adpt)
+    POLICY = BO=ADPT
+endif
+
+ifeq ($(BO_POLICY), adpt_thresh)
+    POLICY = BO=ADPT_THRESH
+endif
+
+ifeq ($(BO_POLICY), asym_adpt_thresh)
+    POLICY = BO=ASYM_ADPT_THRESH
+endif
+
+ifeq ($(BO_POLICY), spin)
+    POLICY = BO=SPIN
+endif
+
+ifeq ($(BO_POLICY), spin_pause)
+    POLICY = BO=SPIN_PAUSE
+endif
+
+ifeq ($(BO_POLICY), sleep)
+    POLICY = BO=SLEEP
+endif
+
+ifeq ($(BO_POLICY), asym_adpt)
+    POLICY = BO=ASYM_ADPT
+endif
+
+ifeq ($(BO_POLICY), asym_spin)
+    POLICY = BO=ASYM_SPIN
+endif
+
+ifeq ($(BO_POLICY), dasym_spin)
+    POLICY = BO=DASYM_SPIN
+endif
+
+ifeq ($(BO_POLICY), asym_sleep)
+    POLICY = BO=ASYM_SLEEP
+endif
+
+ifeq ($(BO_POLICY), dasym_adpt)
+    POLICY = BO=DASYM_ADPT
+endif
+
+ifeq ($(BO_POLICY), ddasym_adpt)
+    POLICY = BO=DDASYM_ADPT
+endif
+
+ifeq ($(BO_POLICY), dasym_sleep)
+    POLICY = BO=DASYM_SLEEP
+endif
+
+ifeq ($(BO_POLICY), ddasym_sleep)
+    POLICY = BO=DDASYM_SLEEP
+endif
+DEFINES += -D${POLICY}
+
+ifeq ($(CM_POLICY), suicide)
+    DEFINES += -DCM=CM_SUICIDE
+endif
+ifeq ($(CM_POLICY), delay)
+    DEFINES += -DCM=CM_DELAY
+endif
+ifeq ($(CM_POLICY), backoff)
+    DEFINES += -DCM=CM_BACKOFF
+endif
+ifeq ($(CM_POLICY), modular)
+    DEFINES += -DCM=CM_MODULAR
+endif
+
+D := $(DEFINES)
+D := $(D:KARMA=0)
+D := $(D:AGGRESSIVE=1)
+D := $(D:TIMESTAMP=2)
+D := $(D:SUICIDE=3)
+D += -DKARMA=0 -DAGGRESSIVE=1 -DTIMESTAMP=2 -DSUICIDE=3
+D := $(D:ADPT=0)
+D := $(D:SPIN=1)
+D := $(D:SLEEP=2)
+D := $(D:SPIN_PAUSE=3)
+D := $(D:ASYM_ADPT=4)
+D := $(D:ASYM_SPIN=5)
+D := $(D:ASYM_SLEEP=6)
+D := $(D:DASYM_ADPT=7)
+D := $(D:DDASYM_ADPT=8)
+D := $(D:DASYM_SLEEP=9)
+D := $(D:DDASYM_SLEEP=10)
+D := $(D:ADPT_THRESH=11)
+D := $(D:ASYM_ADPT_THRESH=12)
+D := $(D:DASYM_SPIN=13)
+D += -DADPT=0 -DSPIN=1 -DSLEEP=2 -DSPIN_PAUSE=3 -DASYM_ADPT=4 -DASYM_SPIN=5 -DASYM_SLEEP=6 -DASYM_ADPT=7 -DDASYM_ADPT=8 -DASYM_SLEEP=9 -DDASYM_SLEEP=10 -DADPT_THRESH=11 -DASYM_ADPT_THRESH=12 -DDASYM_SPIN=13
+D := $(D:CM_SUICIDE=0)
+D := $(D:CM_DELAY=1)
+D := $(D:CM_BACKOFF=2)
+D := $(D:CM_MODULAR=3)
+D += -DCM_SUICIDE=0 -DCM_DELAY=1 -DCM_BACKOFF=2 -DCM_MODULAR=3
+
+DEFINES += -DEPOCH_GC
+#DEFINES += -UEPOCH_GC
+# DEFINES += -DREAD_LOCKED_DATA
+
+#DEFINES += -DLOCK_SHIFT_EXTRA=0
+DEFINES += -DTM_STATISTICS
+DEFINES += -UTM_STATISTICS2
+
+# DEFINES += -DNO_STACK_CHECK
+# DEFINES += -DTANGER_STATS
+
+DEFINES += -DIRREVOCABLE_ENABLED
+# DEFINES += -UIRREVOCABLE_ENABLED
+
+# Add wrapper for pthread function 
+# DEFINES += -DPTHREAD_WRAPPER
+DEFINES += -UPTHREAD_WRAPPER
+# TODO if THREAD_WRAPPER is defined, library must be linked with -ldl
+
+# Define how TLS is used in ABI (should be removed for next release)
+DEFINES += -DTLS_COMPILER
+
+##############################################################################
+# Do not modify anything below this point!
+##############################################################################
+# TODO Use libtool to generate libraries
+# libtool --mode=compile
+# libtool --mode=link
+# libtool --mode=install 
+
+# NOTES
+# Use explicit parameters for Tanger and Intel STM Compiler
+
+# TODO make it MacOS compatible
+
+# Remove the -DEXPLICIT_TX_PARAMETER flag if defined
+# Manage it accordingly to the required library 
+# TODO is it useful?
+DEF_ABI = $(subst -DEXPLICIT_TX_PARAMETER,,$(DEFINES))
+
+# Rules for intset benchmarks
+BINS = intset-hs intset-ll intset-rb intset-sl bank
+
+intset-hs.o:	$(ROOT)/test/intset/intset.c
+	$(TESTCC) $(TESTCFLAGS) -DUSE_HASHSET -c -o $@ $<
+
+intset-ll.o:	$(ROOT)/test/intset/intset.c
+	$(TESTCC) $(TESTCFLAGS) -DUSE_LINKEDLIST -c -o $@ $<
+
+intset-rb.o:	$(ROOT)/test/intset/intset.c
+	$(TESTCC) $(TESTCFLAGS) -DUSE_RBTREE -c -o $@ $<
+
+intset-sl.o:	$(ROOT)/test/intset/intset.c
+	$(TESTCC) $(TESTCFLAGS) -DUSE_SKIPLIST -c -o $@ $<
+
+bank.o:	$(ROOT)/test/bank/bank.c
+	$(TESTCC) $(TESTCFLAGS) -c -o $@ $<
+
+# FIXME in case of ABI $(TMLIB) must be replaced to abi/...
+$(BINS):	%:	%.o all
+	$(TESTLD) -o $@ $< $(TESTLDFLAGS) -lpthread
+
+test: 	all $(BINS)
+
+intset-clean:
+	rm -f $(BINS)
+
+check: 	test intset-check
+
+intset-check:
+	@echo Testing Linked List \(intset-ll\)
+	@./intset-ll -d 2000 1>/dev/null 2>&1
+	@echo Testing Linked List with concurrency \(intset-ll -n 4\)
+	@./intset-ll -d 2000 -n 4 1>/dev/null 2>&1
+	@echo Testing Red Black Tree \(intset-rb\)
+	@./intset-rb -d 2000 1>/dev/null 2>&1
+	@echo Testing Red Black Tree with concurrency \(intset-rb -n 4\)
+	@./intset-rb -d 2000 -n 4 1>/dev/null 2>&1
+	@echo Testing Skip List \(intset-sl\)
+	@./intset-sl -d 2000 1>/dev/null 2>&1
+	@echo Testing Skip List with concurrency \(intset-sl -n 4\)
+	@./intset-sl -d 2000 -n 4 1>/dev/null 2>&1
+	@echo Testing Hash Set \(intset-hs\)
+	@./intset-hs -d 2000 1>/dev/null 2>&1
+	@echo Testing Hash Set with concurrency \(intset-hs -n 4\)
+	@./intset-hs -d 2000 -n 4 1>/dev/null 2>&1
+	@echo All tests passed
+
