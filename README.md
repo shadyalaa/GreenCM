@@ -9,10 +9,7 @@ Green-CM, the solution proposed here, is the first contention management scheme 
 * it introduces an energy efficient design of the back-off mechanism, which combines spin-based and sleep-based implementations;
 * it makes extensive use of self- tuning mechanisms to pursue optimal efficiency across highly heterogeneous workloads
 
-The folder **GreenCM**, contains the implementaton of the algorithm with TinySTM. It also has the following benchmarks:
-*STAMP: 
-*STMbench7:
-*Memcached:
+The folder **GreenCM**, contains the implementaton of the algorithm with TinySTM. It also has the following benchmarks: STAMP benchmark, STMbench7 and Memcached:
 
 For questions, contact the author: Shady Alaa - salaa@gsd.inesc-id.pt
 
