@@ -16,4 +16,4 @@ For questions, contact the author: Shady Alaa - salaa@gsd.inesc-id.pt
 When using this work, please cite accordingly: Shady Issa, Paolo Romano and Mats Brorsson, "Green-CM: Energy efficient contention management for Transactional Memory", Proceedings of the International Conference on Parallel Processing, ICPP 2015
 
 ## Acknowledgements
-This work was supported by national funds through Fundação para a Cieência e Tecnologia (FCT), via the projects UID/CEC/50021/2013 and EXPL/EEI-ESS/0361/2013
+This work was partially supported by national funds through Fundação para a Cieência e Tecnologia (FCT), via the projects UID/CEC/50021/2013 and EXPL/EEI-ESS/0361/2013
