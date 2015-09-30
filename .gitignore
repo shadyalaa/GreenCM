@@ -1,0 +1,29 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+stmbench7/target
+stmbench7/sb7_tt
+
+mcd/memcached
+
+
+bayes/bayes
+genome/genome
+intruder/intruder
+kmeans/kmeans
+labyrinth/labyrinth
+ssca2/ssca2
+vacation/vacation
+yada/yada
+
